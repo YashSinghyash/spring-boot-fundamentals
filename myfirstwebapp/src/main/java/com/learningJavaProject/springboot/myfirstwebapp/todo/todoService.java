@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+
 @Service
 public class todoService {
     private static List<todo> todos = new ArrayList<>();
+    private static int todosCount = 3;
     static {
         todos.add(new todo(1, "Yash Pratap Singh" , "Learn SpringBoot" , LocalDate.now().plusDays(2) , false));
         todos.add(new todo(2, "Yash Pratap Singh" , "Learn AI ML" , LocalDate.now().plusWeeks(1) , false));
@@ -15,6 +18,12 @@ public class todoService {
     }
 
     public List<todo> findByUserName(String username){
-        return todos;
+        Predicate<? super todo> predicate = todo -> todo.getUsername().equalsIgnoreCase(username);
+        return todos.stream().filter(predicate).toList();
+    }
+    public static void addTodo(String username, String description, LocalDate targetDate, boolean status){
+        todo to = new todo(++todosCount , username , description , targetDate , status);
+        todos.add(to);
+
     }
 }
