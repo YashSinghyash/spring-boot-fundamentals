@@ -1,12 +1,22 @@
 package com.learningJavaProject.springboot.myfirstwebapp.todo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
+import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 
+@Entity(name = "TODOSchema")
 public class todo {
 
+    @Id
+    @GeneratedValue
     private int id;
+
+    @Column(name = "Name")
     private String username;
     @Size(min = 10 , message="Enter atleast 10 chars")
     private String description;
@@ -19,6 +29,10 @@ public class todo {
         this.description = description;
         this.targetDate = targetDate;
         this.done = done;
+    }
+
+    public todo() {
+
     }
 
     public int getId() {
