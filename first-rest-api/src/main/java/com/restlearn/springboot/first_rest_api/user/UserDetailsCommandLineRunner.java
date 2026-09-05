@@ -5,12 +5,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class UserDetailsCommandLineRunner implements CommandLineRunner {
 
-        Logger logger = LoggerFactory.getLogger(getClass());
+    public UserDetailsCommandLineRunner(UserDetailsRepository repository) {
+        this.repository = repository;
+    }
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private UserDetailsRepository repository;
+
     @Override
     public void run(String... args) throws Exception {
-        logger.info(args.toString());
+        repository.save(new UserDetails("Yash" , "Admin"));
+        repository.save(new UserDetails("Check_02" , "Roomy"));
+        repository.save(new UserDetails("Check_03" , "debugRole"));
+
+        List<UserDetails> users = repository.findByRole("Admin");
+        users.forEach(user -> logger.info(user.toString()));
+
     }
 }
