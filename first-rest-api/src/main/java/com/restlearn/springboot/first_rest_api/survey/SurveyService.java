@@ -87,4 +87,13 @@ public class SurveyService {
         return questionId;
     }
 
+    public String updateSurveyQuestion(String surveyId, String questionId, Question question) {
+        List<Question> questions = retriveAllSurveyQuestions(surveyId);
+        if (questions == null) return null;
+        boolean removed = questions.removeIf(q -> q.getId().equalsIgnoreCase(questionId));
+        if (!removed) return null;
+        question.setId(questionId);
+        questions.add(question);
+        return questionId;
+    }
 }
